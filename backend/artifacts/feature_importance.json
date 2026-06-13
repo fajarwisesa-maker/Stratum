@@ -1,0 +1,46 @@
+[
+  {
+    "feature": "moisture_pct",
+    "importance": 1.929972
+  },
+  {
+    "feature": "water_activity",
+    "importance": 1.084654
+  },
+  {
+    "feature": "microbial_cfu_g",
+    "importance": 0.498377
+  },
+  {
+    "feature": "thickness_mm",
+    "importance": 0.215168
+  },
+  {
+    "feature": "fat_pct",
+    "importance": 0.210812
+  },
+  {
+    "feature": "protein_pct",
+    "importance": 0.186908
+  },
+  {
+    "feature": "weight_g",
+    "importance": 0.185241
+  },
+  {
+    "feature": "hardness_n",
+    "importance": 0.177304
+  },
+  {
+    "feature": "ph",
+    "importance": 0.177163
+  },
+  {
+    "feature": "ash_pct",
+    "importance": 0.146269
+  },
+  {
+    "feature": "peroxide_value",
+    "importance": 0.137876
+  }
+]

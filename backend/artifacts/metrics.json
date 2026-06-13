@@ -1,0 +1,9 @@
+{
+  "model": "XGBoost Classifier",
+  "dataset": "Biscuit Synthetic (SNI 01-2973-2011 based)",
+  "cv_f1_mean": 0.9231,
+  "cv_f1_std": 0.017,
+  "cv_auc_mean": 0.925,
+  "cv_precision": 0.9242,
+  "cv_recall": 0.9222
+}

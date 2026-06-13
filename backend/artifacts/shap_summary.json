@@ -1,0 +1,46 @@
+[
+  {
+    "feature": "alcohol",
+    "importance": 0.95018
+  },
+  {
+    "feature": "sulphates",
+    "importance": 0.68426
+  },
+  {
+    "feature": "volatile_acidity",
+    "importance": 0.53658
+  },
+  {
+    "feature": "total_sulfur_dioxide",
+    "importance": 0.42084
+  },
+  {
+    "feature": "chlorides",
+    "importance": 0.26862
+  },
+  {
+    "feature": "density",
+    "importance": 0.23743
+  },
+  {
+    "feature": "ph",
+    "importance": 0.21598
+  },
+  {
+    "feature": "free_sulfur_dioxide",
+    "importance": 0.21047
+  },
+  {
+    "feature": "citric_acid",
+    "importance": 0.19183
+  },
+  {
+    "feature": "fixed_acidity",
+    "importance": 0.19122
+  },
+  {
+    "feature": "residual_sugar",
+    "importance": 0.15244
+  }
+]

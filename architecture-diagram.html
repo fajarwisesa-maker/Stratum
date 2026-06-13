@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stratum — System Architecture Diagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #080e1c;
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(123,140,222,0.1);
+      border: 1px solid rgba(123,140,222,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #a5b4fc;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .header-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #e8edf5;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .header-sub {
+      font-size: 14px;
+      color: #5a7099;
+    }
+
+    /* ── Main diagram wrapper ── */
+    .diagram {
+      width: 100%;
+      max-width: 1100px;
+      position: relative;
+    }
+
+    /* ── Layer row ── */
+    .layer-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    /* ── Layer label column ── */
+    .layer-label {
+      width: 100px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 20px;
+    }
+    .layer-label span {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3a4f6e;
+      writing-mode: horizontal-tb;
+      text-align: right;
+    }
+
+    /* ── Nodes container ── */
+    .nodes-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    /* ── Arrow connector ── */
+    .arrow-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      flex-shrink: 0;
+      gap: 4px;
+      position: relative;
+      z-index: 2;
+    }
+    .arrow-line {
+      height: 2px;
+      width: 40px;
+      background: linear-gradient(90deg, #1e2d4a, #7b8cde55, #1e2d4a);
+      position: relative;
+    }
+    .arrow-line::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-left-color: #7b8cde;
+    }
+    .arrow-label {
+      font-size: 9px;
+      color: #3a4f6e;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    /* ── Down arrow ── */
+    .down-arrow-row {
+      display: flex;
+      align-items: center;
+      padding: 0 0 0 100px;
+    }
+    .down-arrow-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .down-line {
+      width: 2px;
+      height: 32px;
+      background: linear-gradient(180deg, #1e2d4a, #7b8cde55, #1e2d4a);
+    }
+    .down-arrow-tip {
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-top-color: #7b8cde;
+    }
+    .down-label {
+      font-size: 9px;
+      color: #3a4f6e;
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── NODE CARD ── */
+    .node {
+      border-radius: 14px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      min-width: 160px;
+      max-width: 200px;
+      flex: 1;
+      transition: transform 0.2s;
+    }
+    .node:hover { transform: translateY(-2px); }
+    .node::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      border: 1px solid transparent;
+    }
+
+    /* Node variants */
+    .node-input {
+      background: rgba(123,140,222,0.07);
+      border: 1px solid rgba(123,140,222,0.25);
+    }
+    .node-input::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #7b8cde, #a5b4fc);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .node-api {
+      background: rgba(79,70,229,0.1);
+      border: 1px solid rgba(79,70,229,0.3);
+    }
+    .node-api::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #4f46e5, #7b8cde);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .node-ml {
+      background: rgba(16,185,129,0.07);
+      border: 1px solid rgba(52,211,153,0.25);
+    }
+    .node-ml::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #059669, #34d399);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .node-cluster {
+      background: rgba(251,191,36,0.07);
+      border: 1px solid rgba(251,191,36,0.2);
+    }
+    .node-cluster::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #d97706, #fbbf24);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .node-output {
+      background: rgba(244,63,94,0.06);
+      border: 1px solid rgba(251,113,133,0.2);
+    }
+    .node-output::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #e11d48, #fb7185);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .node-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .node-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #e8edf5;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .node-subtitle {
+      font-size: 10px;
+      color: #5a7099;
+      line-height: 1.5;
+    }
+    .node-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-top: 8px;
+    }
+    .tag-blue   { background: rgba(123,140,222,0.15); color: #a5b4fc; }
+    .tag-green  { background: rgba(52,211,153,0.12);  color: #34d399; }
+    .tag-yellow { background: rgba(251,191,36,0.12);  color: #fbbf24; }
+    .tag-red    { background: rgba(251,113,133,0.12); color: #fb7185; }
+    .tag-purple { background: rgba(79,70,229,0.15);   color: #818cf8; }
+
+    /* ── ML Engine row — parallel nodes ── */
+    .parallel-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      max-width: 220px;
+    }
+    .parallel-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #3a4f6e;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+
+    /* ── Output row ── */
+    .output-row {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+    }
+    .node-sm {
+      min-width: 120px;
+      flex: 1;
+      max-width: 160px;
+    }
+
+    /* ── Section divider line ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 0 0 100px;
+      margin: 8px 0;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #1e2d4a, transparent);
+    }
+    .divider-text {
+      font-size: 9px;
+      color: #3a4f6e;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ── Footer legend ── */
+    .legend {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #5a7099;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    /* ── Full pipeline row ── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* ── Split flow visual ── */
+    .split-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+      max-width: 700px;
+    }
+    .split-header {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #3a4f6e;
+      margin-bottom: 8px;
+    }
+    .split-branches {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Outer container */
+    .outer {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Horizontal row */
+    .h-row {
+      display: flex;
+      align-items: center;
+      padding-left: 100px;
+      gap: 0;
+      position: relative;
+    }
+
+    /* vertical connector */
+    .v-connector {
+      display: flex;
+      padding-left: 100px;
+      align-items: flex-start;
+    }
+    .v-connector-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 180px; /* width of the FastAPI node */
+    }
+    .v-line { width: 2px; height: 28px; background: linear-gradient(180deg, #253555, #7b8cde40); }
+    .v-tip { width: 0; height: 0; border: 5px solid transparent; border-top-color: #7b8cde; }
+
+    /* ML parallel connector */
+    .ml-connector {
+      display: flex;
+      padding-left: 100px;
+      gap: 0;
+    }
+
+    /* Output section */
+    .output-section {
+      background: rgba(8,14,28,0.6);
+      border: 1px solid #1e2d4a;
+      border-radius: 20px;
+      padding: 20px 24px;
+      margin-left: 100px;
+    }
+    .output-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3a4f6e;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .output-node {
+      background: rgba(13,20,36,0.8);
+      border: 1px solid #1e2d4a;
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .output-node-icon { font-size: 18px; margin-bottom: 6px; display: block; }
+    .output-node-title { font-size: 11px; font-weight: 600; color: #e8edf5; margin-bottom: 3px; }
+    .output-node-sub { font-size: 9px; color: #5a7099; line-height: 1.4; }
+
+    /* React wrapper */
+    .react-wrapper {
+      border: 1px solid rgba(123,140,222,0.2);
+      border-radius: 20px;
+      padding: 20px 24px;
+      margin-left: 100px;
+      background: rgba(123,140,222,0.03);
+      position: relative;
+    }
+    .react-wrapper-label {
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background: #080e1c;
+      padding: 0 8px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #7b8cde;
+    }
+
+    /* process row full */
+    .full-process {
+      display: grid;
+      grid-template-columns: 180px 60px 180px 60px auto;
+      align-items: center;
+      padding-left: 100px;
+      gap: 0;
+    }
+
+    /* STEP CIRCLES */
+    .step-num {
+      position: absolute;
+      top: -10px;
+      left: 14px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      System Architecture
+    </div>
+    <h1 class="header-title">Stratum · Technical Architecture</h1>
+    <p class="header-sub">AI-Powered Biscuit Quality Testing · TÜV NORD Indonesia · AI Open Innovation Challenge 2026</p>
+  </div>
+
+  <!-- ════════════════════ DIAGRAM ════════════════════ -->
+  <div class="outer">
+
+    <!-- ── ROW 1: INPUT ── -->
+    <div style="display:flex; align-items:center; padding-left:100px; gap:0;">
+      <!-- Step label -->
+      <div style="width:0; position:relative;">
+        <div style="position:absolute; right:10px; top:50%; transform:translateY(-50%); text-align:right;">
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3a4f6e;">INPUT</span>
+        </div>
+      </div>
+
+      <!-- CSV Upload Node -->
+      <div class="node node-input" style="max-width:180px; position:relative;">
+        <div class="step-num" style="background:rgba(123,140,222,0.15);color:#a5b4fc;">1</div>
+        <span class="node-icon">📄</span>
+        <div class="node-title">CSV Upload</div>
+        <div class="node-subtitle">Lab test results from TÜV NORD instruments. Multi-batch support.</div>
+        <span class="node-tag tag-blue">CSV / Excel</span>
+      </div>
+
+      <!-- Arrow → -->
+      <div class="arrow-col">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">HTTP POST</div>
+      </div>
+
+      <!-- Validation Node -->
+      <div class="node node-input" style="max-width:180px; position:relative;">
+        <div class="step-num" style="background:rgba(123,140,222,0.15);color:#a5b4fc;">2</div>
+        <span class="node-icon">🛡️</span>
+        <div class="node-title">Validation</div>
+        <div class="node-subtitle">Schema check, missing field flags, numeric range validation.</div>
+        <span class="node-tag tag-blue">FastAPI</span>
+      </div>
+
+      <!-- Arrow → -->
+      <div class="arrow-col">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">Parsed rows[ ]</div>
+      </div>
+
+      <!-- FastAPI Node -->
+      <div class="node node-api" style="max-width:180px; position:relative;">
+        <div class="step-num" style="background:rgba(79,70,229,0.2);color:#818cf8;">3</div>
+        <span class="node-icon">⚡</span>
+        <div class="node-title">FastAPI Backend</div>
+        <div class="node-subtitle">/predict · /simulate · /batch · /cluster endpoints. CORS + async.</div>
+        <span class="node-tag tag-purple">Python 3.11</span>
+      </div>
+    </div>
+
+    <!-- ── VERTICAL CONNECTOR: FastAPI → Parallel ── -->
+    <div style="padding-left:100px; display:flex; align-items:flex-start; margin:0;">
+      <!-- Align to center of FastAPI node: 180+60+180+60 = offset -->
+      <div style="width:540px; display:flex; justify-content:flex-end;">
+        <div style="width:180px; display:flex; flex-direction:column; align-items:center;">
+          <div style="width:2px;height:24px;background:linear-gradient(180deg,#253555,#7b8cde40);"></div>
+          <div style="width:0;height:0;border:5px solid transparent;border-top-color:#7b8cde;"></div>
+          <div style="font-size:9px;color:#3a4f6e;margin-top:4px;letter-spacing:0.04em;">Parallel Pipelines</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ROW 2: PARALLEL ML ENGINE ── -->
+    <div style="padding-left:100px; display:flex; align-items:flex-start; gap:0; position:relative;">
+
+      <!-- Left spacer to align with FastAPI -->
+      <div style="width:480px; flex-shrink:0;"></div>
+
+      <!-- Parallel block -->
+      <div style="display:flex; flex-direction:column; gap:10px; max-width:640px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3a4f6e;text-align:center;margin-bottom:2px;">ML PROCESSING ENGINE</div>
+
+        <!-- Three parallel nodes in a row -->
+        <div style="display:flex; gap:10px;">
+
+          <!-- XGBoost node -->
+          <div class="node node-ml" style="flex:1; position:relative;">
+            <div class="step-num" style="background:rgba(52,211,153,0.12);color:#34d399;">4a</div>
+            <span class="node-icon">🌲</span>
+            <div class="node-title">XGBoost Model</div>
+            <div class="node-subtitle">Gradient boosted tree classifier. Outputs PASS/FAIL probability score per sample.</div>
+            <div style="display:flex; gap:4px; margin-top:8px; flex-wrap:wrap;">
+              <span class="node-tag tag-green">predict_proba()</span>
+            </div>
+          </div>
+
+          <!-- SHAP node -->
+          <div class="node node-ml" style="flex:1; position:relative;">
+            <div class="step-num" style="background:rgba(52,211,153,0.12);color:#34d399;">4b</div>
+            <span class="node-icon">📊</span>
+            <div class="node-title">SHAP Explainer</div>
+            <div class="node-subtitle">TreeExplainer extracts per-feature Shapley values. Waterfall + force plot data.</div>
+            <div style="display:flex; gap:4px; margin-top:8px; flex-wrap:wrap;">
+              <span class="node-tag tag-green">shap_values[ ]</span>
+            </div>
+          </div>
+
+          <!-- K-Means node -->
+          <div class="node node-cluster" style="flex:1; position:relative;">
+            <div class="step-num" style="background:rgba(251,191,36,0.12);color:#fbbf24;">4c</div>
+            <span class="node-icon">🔵</span>
+            <div class="node-title">K-Means Clustering</div>
+            <div class="node-subtitle">Assigns batch to historical failure pattern cluster. Identifies recurring defect modes.</div>
+            <div style="display:flex; gap:4px; margin-top:8px; flex-wrap:wrap;">
+              <span class="node-tag tag-yellow">cluster_id</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal join line below parallel nodes -->
+        <div style="position:relative; height:20px; margin:0 10px;">
+          <div style="position:absolute; top:0; left:calc(50% - 1px); width:2px; height:20px; background:linear-gradient(180deg,#7b8cde40,#253555);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Merge label ── -->
+    <div style="padding-left:100px; display:flex; justify-content:flex-end; max-width:1200px;">
+      <div style="width:640px; display:flex; flex-direction:column; align-items:center; padding-right:0;">
+        <div style="font-size:9px;color:#3a4f6e;letter-spacing:0.04em; margin-bottom:4px;">Merged Response JSON</div>
+        <div style="width:0;height:0;border:5px solid transparent;border-top-color:#7b8cde;"></div>
+      </div>
+    </div>
+
+    <!-- ── ROW 3: REACT DASHBOARD ── -->
+    <div style="margin:8px 0 0 100px;">
+      <div class="react-wrapper">
+        <div class="react-wrapper-label">⑤ React Frontend — Output Layer</div>
+        <div style="font-size:9px;font-weight:600;color:#5a7099;text-align:center;margin-bottom:14px;letter-spacing:0.05em;">DASHBOARD / SIMULATOR — Vercel Deployment</div>
+        <div class="output-grid">
+
+          <div class="output-node" style="border-color:rgba(52,211,153,0.2);">
+            <span class="output-node-icon">✅</span>
+            <div class="output-node-title" style="color:#34d399;">Prediction Card</div>
+            <div class="output-node-sub">PASS / FAIL verdict + confidence score + animated gauge</div>
+          </div>
+
+          <div class="output-node" style="border-color:rgba(123,140,222,0.2);">
+            <span class="output-node-icon">📉</span>
+            <div class="output-node-title" style="color:#a5b4fc;">SHAP Waterfall</div>
+            <div class="output-node-sub">Per-sample feature impact chart. Plotly.js interactive.</div>
+          </div>
+
+          <div class="output-node" style="border-color:rgba(251,191,36,0.2);">
+            <span class="output-node-icon">🗺️</span>
+            <div class="output-node-title" style="color:#fbbf24;">Cluster Map</div>
+            <div class="output-node-sub">Scatter plot: batch position in failure cluster space</div>
+          </div>
+
+          <div class="output-node" style="border-color:rgba(251,113,133,0.2);">
+            <span class="output-node-icon">🎛️</span>
+            <div class="output-node-title" style="color:#fb7185;">What-If Simulator</div>
+            <div class="output-node-sub">Parameter sliders → real-time re-prediction via /simulate</div>
+          </div>
+
+        </div>
+
+        <!-- PDF export note -->
+        <div style="margin-top:14px; padding:8px 14px; background:rgba(123,140,222,0.06); border:1px solid rgba(123,140,222,0.15); border-radius:8px; text-align:center; font-size:10px; color:#5a7099;">
+          📄 All outputs exportable as <strong style="color:#a5b4fc;">PDF Audit Report</strong> — batch ID, predictions, SHAP chart, cluster assignment
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LEGEND ── -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:rgba(123,140,222,0.4);border:1px solid rgba(123,140,222,0.5);"></div>
+        Input / API Layer
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:rgba(52,211,153,0.3);border:1px solid rgba(52,211,153,0.4);"></div>
+        ML Engine (XGBoost + SHAP)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:rgba(251,191,36,0.3);border:1px solid rgba(251,191,36,0.35);"></div>
+        Clustering Module
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:rgba(251,113,133,0.2);border:1px solid rgba(251,113,133,0.3);"></div>
+        React Dashboard
+      </div>
+      <div class="legend-item">
+        <div style="width:24px;height:2px;background:linear-gradient(90deg,#7b8cde,transparent);position:relative;">
+          <div style="position:absolute;right:-2px;top:50%;transform:translateY(-50%);border:4px solid transparent;border-left-color:#7b8cde;"></div>
+        </div>
+        Data flow
+      </div>
+    </div>
+
+    <!-- ── TECH STACK ROW ── -->
+    <div style="margin-top:32px; padding:16px 24px; margin-left:0; background:rgba(13,20,36,0.6); border:1px solid #1e2d4a; border-radius:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3a4f6e;">Tech Stack</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <span class="node-tag tag-purple" style="font-size:10px;">FastAPI</span>
+        <span class="node-tag tag-green" style="font-size:10px;">XGBoost</span>
+        <span class="node-tag tag-green" style="font-size:10px;">SHAP</span>
+        <span class="node-tag tag-yellow" style="font-size:10px;">scikit-learn K-Means</span>
+        <span class="node-tag tag-blue" style="font-size:10px;">React + Vite</span>
+        <span class="node-tag tag-blue" style="font-size:10px;">Plotly.js</span>
+        <span class="node-tag tag-blue" style="font-size:10px;">Framer Motion</span>
+        <span class="node-tag tag-blue" style="font-size:10px;">Zustand</span>
+        <span class="node-tag" style="background:rgba(244,63,94,0.1);color:#fb7185;font-size:10px;">Vercel + Railway</span>
+      </div>
+    </div>
+
+    <!-- ── REFERENCE FOOTNOTE ── -->
+    <div style="margin-top:20px; font-size:10px; color:#3a4f6e; text-align:center; line-height:1.8;">
+      References: Chen & Guestrin (2016) XGBoost · Lundberg & Lee (2017) SHAP · SNI 2973:2011 · BPOM Annual Report 2022
+    </div>
+
+  </div>
+</body>
+</html>

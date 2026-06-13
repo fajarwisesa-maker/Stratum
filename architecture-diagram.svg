@@ -1,0 +1,275 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap');
+      text { font-family: 'DM Sans', Arial, sans-serif; }
+      .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+    <!-- Arrow marker -->
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#7b8cde"/>
+    </marker>
+    <marker id="arrow-down" markerWidth="8" markerHeight="8" refX="3" refY="6" orient="auto">
+      <path d="M0,0 L6,0 L3,8 z" fill="#7b8cde"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#34d399"/>
+    </marker>
+    <!-- Filters / glow -->
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ═══════════════ BACKGROUND ═══════════════ -->
+  <rect width="1200" height="780" fill="#080e1c" rx="20"/>
+
+  <!-- Subtle grid -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" stroke="#1e2d4a" stroke-width="0.5" fill="none"/>
+  </pattern>
+  <rect width="1200" height="780" fill="url(#grid)" opacity="0.4" rx="20"/>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <!-- Badge -->
+  <rect x="490" y="24" width="220" height="26" rx="13" fill="rgba(123,140,222,0.1)" stroke="#7b8cde" stroke-width="0.8" stroke-opacity="0.3"/>
+  <text x="600" y="41" text-anchor="middle" font-size="9" font-weight="700" fill="#a5b4fc" letter-spacing="1.5">SYSTEM ARCHITECTURE</text>
+
+  <!-- Title -->
+  <text x="600" y="78" text-anchor="middle" font-size="22" font-weight="700" fill="#e8edf5" letter-spacing="-0.5">Stratum · Technical Architecture</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="99" text-anchor="middle" font-size="11" fill="#5a7099">AI-Powered Biscuit Quality Testing · TÜV NORD Indonesia · AI Open Innovation Challenge 2026</text>
+
+  <!-- Divider line -->
+  <line x1="80" y1="116" x2="1120" y2="116" stroke="#1e2d4a" stroke-width="1"/>
+
+  <!-- ═══════════════ LAYER LABELS (left) ═══════════════ -->
+  <text x="58" y="200" text-anchor="middle" font-size="8" font-weight="700" fill="#3a4f6e" letter-spacing="1.5" transform="rotate(-90 58 220)">INPUT</text>
+  <text x="58" y="360" text-anchor="middle" font-size="8" font-weight="700" fill="#3a4f6e" letter-spacing="1.5" transform="rotate(-90 58 380)">BACKEND</text>
+  <text x="58" y="520" text-anchor="middle" font-size="8" font-weight="700" fill="#3a4f6e" letter-spacing="1.5" transform="rotate(-90 58 540)">ML ENGINE</text>
+  <text x="58" y="680" text-anchor="middle" font-size="8" font-weight="700" fill="#3a4f6e" letter-spacing="1.5" transform="rotate(-90 58 700)">OUTPUT</text>
+
+  <!-- Lane separator lines -->
+  <line x1="80" y1="136" x2="1120" y2="136" stroke="#1e2d4a" stroke-width="0.5" stroke-dasharray="4 4"/>
+  <line x1="80" y1="296" x2="1120" y2="296" stroke="#1e2d4a" stroke-width="0.5" stroke-dasharray="4 4"/>
+  <line x1="80" y1="456" x2="1120" y2="456" stroke="#1e2d4a" stroke-width="0.5" stroke-dasharray="4 4"/>
+  <line x1="80" y1="616" x2="1120" y2="616" stroke="#1e2d4a" stroke-width="0.5" stroke-dasharray="4 4"/>
+
+
+  <!-- ═══════════════ ROW 1 — INPUT LAYER ═══════════════ -->
+
+  <!-- Node 1: Auditor / CSV Upload -->
+  <rect x="100" y="148" width="170" height="130" rx="14" fill="rgba(123,140,222,0.07)" stroke="#7b8cde" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="100" y="148" width="170" height="3" rx="1.5" fill="url(#grad-blue)"/>
+  <defs>
+    <linearGradient id="grad-blue" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7b8cde"/><stop offset="100%" stop-color="#a5b4fc"/></linearGradient>
+    <linearGradient id="grad-purple" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#7b8cde"/></linearGradient>
+    <linearGradient id="grad-green" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+    <linearGradient id="grad-yellow" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient>
+    <linearGradient id="grad-red" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#e11d48"/><stop offset="100%" stop-color="#fb7185"/></linearGradient>
+  </defs>
+  <!-- Step circle -->
+  <circle cx="118" cy="165" r="10" fill="rgba(123,140,222,0.15)" stroke="#7b8cde" stroke-width="0.8"/>
+  <text x="118" y="169" text-anchor="middle" font-size="9" font-weight="700" fill="#a5b4fc">1</text>
+  <!-- Icon -->
+  <text x="185" y="197" text-anchor="middle" font-size="24">📄</text>
+  <!-- Title -->
+  <text x="185" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">CSV Upload</text>
+  <!-- Subtitle -->
+  <text x="185" y="238" text-anchor="middle" font-size="9.5" fill="#5a7099">Lab test results from</text>
+  <text x="185" y="251" text-anchor="middle" font-size="9.5" fill="#5a7099">TÜV NORD instruments</text>
+  <!-- Tag -->
+  <rect x="143" y="260" width="84" height="16" rx="4" fill="rgba(123,140,222,0.15)"/>
+  <text x="185" y="271" text-anchor="middle" font-size="9" fill="#a5b4fc" font-family="'JetBrains Mono', monospace">CSV / Excel</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="272" y1="213" x2="316" y2="213" stroke="#7b8cde" stroke-width="1.5" marker-end="url(#arrow-blue)" stroke-opacity="0.7"/>
+  <text x="294" y="207" text-anchor="middle" font-size="8" fill="#3a4f6e">HTTP POST</text>
+  <text x="294" y="224" text-anchor="middle" font-size="8" fill="#3a4f6e">/batch</text>
+
+  <!-- Node 2: Validation -->
+  <rect x="318" y="148" width="170" height="130" rx="14" fill="rgba(123,140,222,0.07)" stroke="#7b8cde" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="318" y="148" width="170" height="3" rx="1.5" fill="url(#grad-blue)"/>
+  <circle cx="336" cy="165" r="10" fill="rgba(123,140,222,0.15)" stroke="#7b8cde" stroke-width="0.8"/>
+  <text x="336" y="169" text-anchor="middle" font-size="9" font-weight="700" fill="#a5b4fc">2</text>
+  <text x="403" y="197" text-anchor="middle" font-size="24">🛡️</text>
+  <text x="403" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">Validation</text>
+  <text x="403" y="238" text-anchor="middle" font-size="9.5" fill="#5a7099">Schema check, missing</text>
+  <text x="403" y="251" text-anchor="middle" font-size="9.5" fill="#5a7099">field flags, range check</text>
+  <rect x="355" y="260" width="96" height="16" rx="4" fill="rgba(123,140,222,0.15)"/>
+  <text x="403" y="271" text-anchor="middle" font-size="9" fill="#a5b4fc" font-family="'JetBrains Mono', monospace">Pydantic + FastAPI</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="490" y1="213" x2="534" y2="213" stroke="#7b8cde" stroke-width="1.5" marker-end="url(#arrow-blue)" stroke-opacity="0.7"/>
+  <text x="512" y="207" text-anchor="middle" font-size="8" fill="#3a4f6e">Parsed</text>
+  <text x="512" y="224" text-anchor="middle" font-size="8" fill="#3a4f6e">rows[ ]</text>
+
+  <!-- Node 3: FastAPI Backend (spans full height of backend lane) -->
+  <rect x="536" y="148" width="580" height="130" rx="14" fill="rgba(79,70,229,0.08)" stroke="#4f46e5" stroke-width="1" stroke-opacity="0.4"/>
+  <rect x="536" y="148" width="580" height="3" rx="1.5" fill="url(#grad-purple)"/>
+  <circle cx="554" cy="165" r="10" fill="rgba(79,70,229,0.2)" stroke="#818cf8" stroke-width="0.8"/>
+  <text x="554" y="169" text-anchor="middle" font-size="9" font-weight="700" fill="#818cf8">3</text>
+  <!-- FastAPI content -->
+  <text x="638" y="197" text-anchor="middle" font-size="24">⚡</text>
+  <text x="638" y="219" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">FastAPI Backend</text>
+  <text x="638" y="237" text-anchor="middle" font-size="9.5" fill="#5a7099">Async Python server — CORS enabled — Railway/Render deployment</text>
+  <!-- Endpoint pills -->
+  <rect x="541" y="250" width="68" height="18" rx="5" fill="rgba(79,70,229,0.15)" stroke="#818cf8" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="575" y="262" text-anchor="middle" font-size="9" fill="#818cf8" font-family="'JetBrains Mono', monospace">POST /predict</text>
+  <rect x="617" y="250" width="60" height="18" rx="5" fill="rgba(79,70,229,0.15)" stroke="#818cf8" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="647" y="262" text-anchor="middle" font-size="9" fill="#818cf8" font-family="'JetBrains Mono', monospace">POST /batch</text>
+  <rect x="685" y="250" width="66" height="18" rx="5" fill="rgba(79,70,229,0.15)" stroke="#818cf8" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="718" y="262" text-anchor="middle" font-size="9" fill="#818cf8" font-family="'JetBrains Mono', monospace">POST /simulate</text>
+  <rect x="759" y="250" width="70" height="18" rx="5" fill="rgba(79,70,229,0.15)" stroke="#818cf8" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="794" y="262" text-anchor="middle" font-size="9" fill="#818cf8" font-family="'JetBrains Mono', monospace">GET /cluster</text>
+
+  <!-- ═══════════════ ARROW DOWN: FastAPI → ML ═══════════════ -->
+  <!-- Three arrows going down from FastAPI to 3 ML nodes -->
+  <!-- Arrow to XGBoost (left) -->
+  <line x1="680" y1="280" x2="680" y2="295" stroke="#7b8cde" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="250" y1="295" x2="1060" y2="295" stroke="#7b8cde" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="250" y1="295" x2="250" y2="308" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-opacity="0.7"/>
+  <line x1="680" y1="295" x2="680" y2="308" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)" stroke-opacity="0.7"/>
+  <line x1="1060" y1="295" x2="1060" y2="308" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.7"/>
+  <path d="M1060 308 L1057 303 L1063 303 Z" fill="#fbbf24"/>
+  <text x="440" y="290" text-anchor="middle" font-size="8" fill="#3a4f6e">Parallel Processing Pipelines</text>
+
+
+  <!-- ═══════════════ ROW 3 — ML ENGINE ═══════════════ -->
+
+  <!-- Node 4a: XGBoost -->
+  <rect x="100" y="310" width="280" height="130" rx="14" fill="rgba(16,185,129,0.07)" stroke="#34d399" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="100" y="310" width="280" height="3" rx="1.5" fill="url(#grad-green)"/>
+  <circle cx="118" cy="327" r="10" fill="rgba(52,211,153,0.12)" stroke="#34d399" stroke-width="0.8"/>
+  <text x="118" y="331" text-anchor="middle" font-size="9" font-weight="700" fill="#34d399">4a</text>
+  <text x="240" y="357" text-anchor="middle" font-size="22">🌲</text>
+  <text x="240" y="379" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">XGBoost Classifier</text>
+  <text x="240" y="397" text-anchor="middle" font-size="9.5" fill="#5a7099">Gradient boosted trees. Outputs PASS/FAIL</text>
+  <text x="240" y="410" text-anchor="middle" font-size="9.5" fill="#5a7099">probability score per sample row.</text>
+  <rect x="166" y="422" width="148" height="16" rx="4" fill="rgba(52,211,153,0.12)"/>
+  <text x="240" y="433" text-anchor="middle" font-size="9" fill="#34d399" font-family="'JetBrains Mono', monospace">predict_proba( ) → 0.94</text>
+
+  <!-- Node 4b: SHAP -->
+  <rect x="460" y="310" width="280" height="130" rx="14" fill="rgba(16,185,129,0.07)" stroke="#34d399" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="460" y="310" width="280" height="3" rx="1.5" fill="url(#grad-green)"/>
+  <circle cx="478" cy="327" r="10" fill="rgba(52,211,153,0.12)" stroke="#34d399" stroke-width="0.8"/>
+  <text x="478" y="331" text-anchor="middle" font-size="9" font-weight="700" fill="#34d399">4b</text>
+  <text x="600" y="357" text-anchor="middle" font-size="22">📊</text>
+  <text x="600" y="379" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">SHAP Explainer</text>
+  <text x="600" y="397" text-anchor="middle" font-size="9.5" fill="#5a7099">TreeExplainer extracts per-feature</text>
+  <text x="600" y="410" text-anchor="middle" font-size="9.5" fill="#5a7099">Shapley values. Waterfall + force plot.</text>
+  <rect x="520" y="422" width="160" height="16" rx="4" fill="rgba(52,211,153,0.12)"/>
+  <text x="600" y="433" text-anchor="middle" font-size="9" fill="#34d399" font-family="'JetBrains Mono', monospace">shap_values[ ] per feature</text>
+
+  <!-- Node 4c: K-Means -->
+  <rect x="820" y="310" width="280" height="130" rx="14" fill="rgba(251,191,36,0.07)" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="820" y="310" width="280" height="3" rx="1.5" fill="url(#grad-yellow)"/>
+  <circle cx="838" cy="327" r="10" fill="rgba(251,191,36,0.12)" stroke="#fbbf24" stroke-width="0.8"/>
+  <text x="838" y="331" text-anchor="middle" font-size="9" font-weight="700" fill="#fbbf24">4c</text>
+  <text x="960" y="357" text-anchor="middle" font-size="22">🔵</text>
+  <text x="960" y="379" text-anchor="middle" font-size="13" font-weight="700" fill="#e8edf5">K-Means Clustering</text>
+  <text x="960" y="397" text-anchor="middle" font-size="9.5" fill="#5a7099">Assigns batch to historical failure</text>
+  <text x="960" y="410" text-anchor="middle" font-size="9.5" fill="#5a7099">cluster. Identifies defect patterns.</text>
+  <rect x="878" y="422" width="164" height="16" rx="4" fill="rgba(251,191,36,0.12)"/>
+  <text x="960" y="433" text-anchor="middle" font-size="9" fill="#fbbf24" font-family="'JetBrains Mono', monospace">cluster_id + centroid_dist</text>
+
+  <!-- Merge arrows pointing down -->
+  <line x1="240" y1="442" x2="240" y2="460" stroke="#34d399" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="600" y1="442" x2="600" y2="460" stroke="#34d399" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="960" y1="442" x2="960" y2="460" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.5"/>
+  <!-- Merge horizontal line -->
+  <line x1="240" y1="460" x2="960" y2="460" stroke="#7b8cde" stroke-width="1" stroke-opacity="0.35"/>
+  <!-- Single arrow down to output -->
+  <line x1="600" y1="460" x2="600" y2="475" stroke="#7b8cde" stroke-width="1.5" stroke-opacity="0.7"/>
+  <path d="M600 477 L597 472 L603 472 Z" fill="#7b8cde"/>
+  <text x="700" y="470" font-size="8" fill="#3a4f6e">Merged JSON Response</text>
+
+
+  <!-- ═══════════════ ROW 4 — OUTPUT LAYER ═══════════════ -->
+
+  <!-- React wrapper border -->
+  <rect x="100" y="480" width="1000" height="190" rx="16" fill="rgba(123,140,222,0.03)" stroke="#7b8cde" stroke-width="1" stroke-opacity="0.2"/>
+  <!-- Label -->
+  <rect x="140" y="472" width="260" height="16" rx="8" fill="#080e1c"/>
+  <text x="270" y="483" text-anchor="middle" font-size="9" font-weight="700" fill="#7b8cde" letter-spacing="1">⑤  REACT FRONTEND — OUTPUT LAYER (Vercel)</text>
+
+  <!-- Output Node 1: Prediction Card -->
+  <rect x="120" y="498" width="220" height="155" rx="12" fill="rgba(13,20,36,0.8)" stroke="#34d399" stroke-width="0.8" stroke-opacity="0.25"/>
+  <rect x="120" y="498" width="220" height="3" rx="1.5" fill="url(#grad-green)"/>
+  <text x="230" y="530" text-anchor="middle" font-size="20">✅</text>
+  <text x="230" y="552" text-anchor="middle" font-size="12" font-weight="700" fill="#34d399">Prediction Card</text>
+  <text x="230" y="570" text-anchor="middle" font-size="9" fill="#5a7099">PASS / FAIL verdict</text>
+  <text x="230" y="583" text-anchor="middle" font-size="9" fill="#5a7099">+ confidence score</text>
+  <text x="230" y="596" text-anchor="middle" font-size="9" fill="#5a7099">+ animated gauge</text>
+  <rect x="162" y="610" width="136" height="16" rx="4" fill="rgba(52,211,153,0.1)"/>
+  <text x="230" y="621" text-anchor="middle" font-size="8.5" fill="#34d399">HeroCard.jsx · Framer Motion</text>
+  <text x="230" y="645" text-anchor="middle" font-size="9" fill="#3a4f6e">Zustand: useAnalysisStore</text>
+
+  <!-- Output Node 2: SHAP Chart -->
+  <rect x="360" y="498" width="220" height="155" rx="12" fill="rgba(13,20,36,0.8)" stroke="#a5b4fc" stroke-width="0.8" stroke-opacity="0.25"/>
+  <rect x="360" y="498" width="220" height="3" rx="1.5" fill="url(#grad-blue)"/>
+  <text x="470" y="530" text-anchor="middle" font-size="20">📉</text>
+  <text x="470" y="552" text-anchor="middle" font-size="12" font-weight="700" fill="#a5b4fc">SHAP Waterfall</text>
+  <text x="470" y="570" text-anchor="middle" font-size="9" fill="#5a7099">Per-sample feature</text>
+  <text x="470" y="583" text-anchor="middle" font-size="9" fill="#5a7099">impact chart.</text>
+  <text x="470" y="596" text-anchor="middle" font-size="9" fill="#5a7099">Interactive Plotly.js</text>
+  <rect x="394" y="610" width="152" height="16" rx="4" fill="rgba(165,180,252,0.1)"/>
+  <text x="470" y="621" text-anchor="middle" font-size="8.5" fill="#a5b4fc">SHAPWaterfall.jsx · Plotly.js</text>
+  <text x="470" y="645" text-anchor="middle" font-size="9" fill="#3a4f6e">type: waterfall, orientation: h</text>
+
+  <!-- Output Node 3: Cluster Map -->
+  <rect x="600" y="498" width="220" height="155" rx="12" fill="rgba(13,20,36,0.8)" stroke="#fbbf24" stroke-width="0.8" stroke-opacity="0.2"/>
+  <rect x="600" y="498" width="220" height="3" rx="1.5" fill="url(#grad-yellow)"/>
+  <text x="710" y="530" text-anchor="middle" font-size="20">🗺️</text>
+  <text x="710" y="552" text-anchor="middle" font-size="12" font-weight="700" fill="#fbbf24">Cluster Map</text>
+  <text x="710" y="570" text-anchor="middle" font-size="9" fill="#5a7099">Scatter plot: batch</text>
+  <text x="710" y="583" text-anchor="middle" font-size="9" fill="#5a7099">position in failure</text>
+  <text x="710" y="596" text-anchor="middle" font-size="9" fill="#5a7099">cluster space</text>
+  <rect x="638" y="610" width="144" height="16" rx="4" fill="rgba(251,191,36,0.1)"/>
+  <text x="710" y="621" text-anchor="middle" font-size="8.5" fill="#fbbf24">ClusterMap.jsx · Plotly.js</text>
+  <text x="710" y="645" text-anchor="middle" font-size="9" fill="#3a4f6e">type: scatter, cluster coloring</text>
+
+  <!-- Output Node 4: Simulator -->
+  <rect x="840" y="498" width="240" height="155" rx="12" fill="rgba(13,20,36,0.8)" stroke="#fb7185" stroke-width="0.8" stroke-opacity="0.2"/>
+  <rect x="840" y="498" width="240" height="3" rx="1.5" fill="url(#grad-red)"/>
+  <text x="960" y="530" text-anchor="middle" font-size="20">🎛️</text>
+  <text x="960" y="552" text-anchor="middle" font-size="12" font-weight="700" fill="#fb7185">What-If Simulator</text>
+  <text x="960" y="570" text-anchor="middle" font-size="9" fill="#5a7099">Parameter sliders →</text>
+  <text x="960" y="583" text-anchor="middle" font-size="9" fill="#5a7099">real-time re-prediction</text>
+  <text x="960" y="596" text-anchor="middle" font-size="9" fill="#5a7099">via POST /simulate</text>
+  <rect x="874" y="610" width="172" height="16" rx="4" fill="rgba(251,113,133,0.1)"/>
+  <text x="960" y="621" text-anchor="middle" font-size="8.5" fill="#fb7185">SimulatorView.jsx · @radix-ui</text>
+  <text x="960" y="645" text-anchor="middle" font-size="9" fill="#3a4f6e">Debounced → /simulate endpoint</text>
+
+  <!-- ═══════════════ TECH STACK BAR ═══════════════ -->
+  <rect x="100" y="686" width="1000" height="40" rx="10" fill="rgba(13,20,36,0.6)" stroke="#1e2d4a" stroke-width="1"/>
+  <text x="140" y="709" font-size="8" font-weight="700" fill="#3a4f6e" letter-spacing="1.5">TECH STACK</text>
+
+  <!-- Tags -->
+  <rect x="222" y="697" width="52" height="16" rx="4" fill="rgba(79,70,229,0.15)"/>
+  <text x="248" y="708" text-anchor="middle" font-size="8.5" fill="#818cf8">FastAPI</text>
+  <rect x="280" y="697" width="60" height="16" rx="4" fill="rgba(52,211,153,0.12)"/>
+  <text x="310" y="708" text-anchor="middle" font-size="8.5" fill="#34d399">XGBoost</text>
+  <rect x="346" y="697" width="40" height="16" rx="4" fill="rgba(52,211,153,0.12)"/>
+  <text x="366" y="708" text-anchor="middle" font-size="8.5" fill="#34d399">SHAP</text>
+  <rect x="392" y="697" width="100" height="16" rx="4" fill="rgba(251,191,36,0.12)"/>
+  <text x="442" y="708" text-anchor="middle" font-size="8.5" fill="#fbbf24">scikit-learn K-Means</text>
+  <rect x="498" y="697" width="76" height="16" rx="4" fill="rgba(123,140,222,0.15)"/>
+  <text x="536" y="708" text-anchor="middle" font-size="8.5" fill="#a5b4fc">React + Vite</text>
+  <rect x="580" y="697" width="54" height="16" rx="4" fill="rgba(123,140,222,0.15)"/>
+  <text x="607" y="708" text-anchor="middle" font-size="8.5" fill="#a5b4fc">Plotly.js</text>
+  <rect x="640" y="697" width="90" height="16" rx="4" fill="rgba(123,140,222,0.15)"/>
+  <text x="685" y="708" text-anchor="middle" font-size="8.5" fill="#a5b4fc">Framer Motion</text>
+  <rect x="736" y="697" width="54" height="16" rx="4" fill="rgba(123,140,222,0.15)"/>
+  <text x="763" y="708" text-anchor="middle" font-size="8.5" fill="#a5b4fc">Zustand</text>
+  <rect x="796" y="697" width="104" height="16" rx="4" fill="rgba(244,63,94,0.1)"/>
+  <text x="848" y="708" text-anchor="middle" font-size="8.5" fill="#fb7185">Vercel + Railway</text>
+
+  <!-- ═══════════════ REFERENCES ═══════════════ -->
+  <text x="600" y="750" text-anchor="middle" font-size="9" fill="#2d3f5a">
+    Ref: Chen &amp; Guestrin (2016) XGBoost · Lundberg &amp; Lee (2017) SHAP · SNI 2973:2011 (BSN) · BPOM Annual Report 2022
+  </text>
+
+</svg>
