@@ -32,8 +32,5 @@ venv/
 env/
 .env
 
-# Backend — trained models & data (regenerate with train_*.py)
-backend/artifacts/*.joblib
-backend/artifacts/*.png
-backend/data/
+# Backend — generated outputs
 backend/shap_outputs/
